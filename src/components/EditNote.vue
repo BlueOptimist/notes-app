@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import db from "./firebaseInit";
+import firebase from "firebase";
+const db = firebase.firestore();
 export default {
   name: "view-note",
   data() {

@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import db from "./firebaseInit";
+import firebase from "firebase";
+const db = firebase.firestore();
 export default {
   name: "new-note",
   data() {
@@ -35,9 +36,10 @@ export default {
   },
   methods: {
     saveNote() {
+      const id = db.collection("nptes").doc().id
       db.collection("notes")
         .add({
-          note_id: this._uid,
+          note_id: id,
           title: this.title,
           content: this.content,
           status: false,

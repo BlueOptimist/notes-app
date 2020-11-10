@@ -9,7 +9,10 @@
     <router-link to="/" class="btn grey">Back</router-link>
     <button @click="deleteNote" class="btn red">Delete</button>
     <div class="fixed-action-btn">
-      <router-link v-bind:to='{name: "edit-note", params:{note_id: note_id}}' class="btn-floating btn-large red">
+      <router-link
+        v-bind:to="{ name: 'edit-note', params: { note_id: note_id } }"
+        class="btn-floating btn-large red"
+      >
         <i class="fa fa-pencil"></i>
       </router-link>
     </div>
@@ -17,7 +20,8 @@
 </template>
 
 <script>
-import db from "./firebaseInit";
+import firebase from "firebase";
+const db = firebase.firestore();
 export default {
   name: "view-note",
   data() {

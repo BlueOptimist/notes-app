@@ -90,16 +90,15 @@ export default {
   },
   computed: {
     filteredNotes: function () {
-      var vm = this;
-      var category = vm.selectedCategory;
+      var category = this.selectedCategory;
       if (category == "All") {
-        return vm.notes;
+        return this.notes;
       } else if (category == "false") {
-        return vm.notes.filter(function (note) {
+        return this.notes.filter(function (note) {
           return note.status === false;
         });
       } else if (category == "true") {
-        return vm.notes.filter(function (note) {
+        return this.notes.filter(function (note) {
           return note.status === true;
         });
       }
@@ -108,6 +107,7 @@ export default {
   methods: {
     isCompleted(note_id, e) {
       var isChecked = e.target.checked;
+
       db.collection("notes")
         .where("note_id", "==", note_id)
         .get()
@@ -117,25 +117,7 @@ export default {
               .update({
                 status: isChecked,
               })
-              .then(() => {
-                this.$router.go({ path: this.$router.path });
-              });
-          });
-        });
-    },
-    fetchData() {
-      db.collection("notes")
-        .orderBy("title")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const data = {
-              id: doc.id,
-              note_id: doc.data().note_id,
-              title: doc.data().title,
-              status: doc.data().status,
-            };
-            this.notes.push(data);
+              .then(this.$router.go(0))
           });
         });
     },
