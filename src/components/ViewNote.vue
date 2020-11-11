@@ -2,20 +2,17 @@
   <div id="view-note">
     <ul class="collection with-header">
       <li class="collection-header">
-        <h4>{{ title }}</h4>
+        <h5>{{ title }}</h5>
       </li>
       <li class="collection-item">{{ content }}</li>
     </ul>
     <router-link to="/" class="btn grey">Back</router-link>
     <button @click="deleteNote" class="btn red">Delete</button>
-    <div class="fixed-action-btn">
-      <router-link
-        v-bind:to="{ name: 'edit-note', params: { note_id: note_id } }"
-        class="btn-floating btn-large red"
-      >
-        <i class="fa fa-pencil"></i>
-      </router-link>
-    </div>
+    <router-link
+      v-bind:to="{ name: 'edit-note', params: { note_id: note_id } }"
+      class="btn orange"
+      >Edit</router-link
+    >
   </div>
 </template>
 
@@ -64,14 +61,13 @@ export default {
         });
     },
     deleteNote() {
-      if (confirm("Are you sure?1")) {
+      if (confirm("Are you sure?")) {
         db.collection("notes")
           .where("note_id", "==", this.$route.params.note_id)
           .get()
           .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-              doc.ref.delete();
-              this.$router.push("/");
+              doc.ref.delete().then((docRef) => this.$router.push("/"));
             });
           });
       }

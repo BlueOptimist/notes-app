@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col s12 m8 offset-m2">
-          <div class="login card-panel green white-text center">
+          <div class="login card-panel white-text center">
             <h3>Login</h3>
             <form action="index.html">
               <div class="input-field">
@@ -58,3 +58,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.login{
+  background-color:#26a69a;
+}
+</style>

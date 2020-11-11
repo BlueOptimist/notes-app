@@ -1,8 +1,9 @@
 <template>
   <div id="dashboard">
+    <router-link to="/new" class="btn grey add"> Write a note </router-link>
     <ul class="collection with-header">
       <li class="collection-header">
-        <h4>Notes</h4>
+        <h5>Notes</h5>
         <label>
           <input
             name="group1"
@@ -54,11 +55,6 @@
         </router-link>
       </li>
     </ul>
-    <div class="fixed-action-btn">
-      <router-link to="/new" class="btn-floating btn-large red">
-        <i class="fa fa-plus"></i>
-      </router-link>
-    </div>
   </div>
 </template>
 
@@ -107,20 +103,40 @@ export default {
   methods: {
     isCompleted(note_id, e) {
       var isChecked = e.target.checked;
-
       db.collection("notes")
         .where("note_id", "==", note_id)
         .get()
         .then((querySnapshot) => {
+          this.notes = [];
           querySnapshot.forEach((doc) => {
             doc.ref
               .update({
                 status: isChecked,
               })
-              .then(this.$router.go(0))
+              .then(() => {
+                db.collection("notes")
+                  .orderBy("title")
+                  .get()
+                  .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                      const data = {
+                        id: doc.id,
+                        note_id: doc.data().note_id,
+                        title: doc.data().title,
+                        status: doc.data().status,
+                      };
+                      this.notes.push(data);
+                    });
+                  });
+              });
           });
         });
     },
   },
 };
 </script>
+<style scoped>
+.add {
+  margin-top: 10px;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <div class="nav-wrapper green">
+    <div class="nav-wrapper">
       <div class="container">
         <router-link to="/" class="brand-logo">Manage Notes</router-link>
         <ul class="right">
@@ -51,5 +51,8 @@ export default {
 <style scoped>
  .email {
      padding-right: 10px;
+ }
+ .nav-wrapper {
+   background-color: #26a69a;
  }
 </style>
